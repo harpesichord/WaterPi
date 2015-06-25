@@ -1,0 +1,111 @@
+.circle {
+    /* absolute position with 3d animation = render layer */
+    position: absolute;
+
+    border:3px solid transparent;
+    border-top: 3px solid hsl(0, 0%, 0%);
+    border-radius: 50%;
+
+    /* shared animation */
+    -webkit-animation: move linear infinite;
+    -moz-animation: move linear infinite;
+    -o-animation: move linear infinite;
+    animation: move linear infinite;
+}
+
+.circle.one {
+    height: 25px;
+    width: 25px;
+    left:62px;
+    top:62px;
+    -webkit-animation-duration: 0.25s;
+    -moz-animation-duration: 0.25s;
+    -o-animation-duration: 0.25s;
+    animation-duration: 0.25s;
+}
+
+.circle.two {
+    height: 50px;
+    width: 50px;
+    left:50px;
+    top:50px;
+    -webkit-animation-duration: 0.35s;
+    -moz-animation-duration: 0.35s;
+    -o-animation-duration: 0.35s;
+    animation-duration: 0.35s;
+}
+
+.circle.three {
+    height: 75px;
+    width: 75px;
+    top: 38px;
+    left: 38px;
+    -webkit-animation-duration: 0.45s;
+    -moz-animation-duration: 0.45s;
+    -o-animation-duration: 0.45s;
+    animation-duration: 0.45s;
+}
+
+.circle.four {
+    height: 100px;
+    width: 100px;
+    top: 26px;
+    left: 26px;
+    -webkit-animation-duration: 0.55s;
+    -moz-animation-duration: 0.55s;
+    -o-animation-duration: 0.55s;
+    animation-duration: 0.55s;
+}
+
+.circle.five {
+    height: 125px;
+    width: 125px;
+    top: 14px;
+    left: 14px;
+    -webkit-animation-duration: 0.65s;
+    -moz-animation-duration: 0.65s;
+    -o-animation-duration: 0.65s;
+    animation-duration: 0.65s;
+}
+
+.circle.six {
+    height: 150px;
+    width: 150px;
+    top: 2px;
+    left: 2px;
+    -webkit-animation-duration: 0.75s;
+    -moz-animation-duration: 0.75s;
+    -o-animation-duration: 0.75s;
+    animation-duration: 0.75s;
+}
+
+@-webkit-keyframes move {
+    from   { -webkit-transform: rotateZ(360deg);  }
+    
+    to { -webkit-transform: rotateZ(0deg); }
+}
+
+@-moz-keyframes move {
+    from   { -moz-transform: rotateZ(360deg);  }
+    
+    to { -moz-transform: rotateZ(0deg); }
+}
+
+@-o-keyframes move {
+    from   { -o-transform: rotateZ(360deg);  }
+    
+    to { -o-transform: rotateZ(0deg); }
+}
+
+@keyframes move {
+    /* rotate on 3d transform for best perf, it ensures GPU accelerated animation */
+    from {transform: rotateZ(360deg);}
+    to {transform: rotateZ(0deg);}
+}
+
+.loader {
+    position:absolute;
+    /* top:50%; */
+    left:50%;
+    margin: 55px 0 0 -75px;
+}

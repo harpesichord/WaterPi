@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: WaterPi
+        psr4_prefix: WaterPi
+        src_path: app
