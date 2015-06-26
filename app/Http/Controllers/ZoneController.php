@@ -3,6 +3,7 @@
 use Request;
 use Session;
 use WaterPi\Http\Controllers\Controller;
+use WaterPi\Http\Controllers\Validation;
 use WaterPi\models\Zone;
 
 class ZoneController extends Controller {
@@ -47,7 +48,22 @@ class ZoneController extends Controller {
 	 */
 	public function add()
 	{
-		return view('zones.create_zone');
+		$input = Request::all();
+		$valid = Validation::createZone($input);
+		
+		if ($valid["status"])
+		{
+			$zo = new Zone();
+			$zo->NAME = trim($input["name"]);
+			$zo->RELAY_CHANNEL = trim($input["channel"]);
+			$zo->DESCRIPTION = trim($input["desc"]);
+			$zo->save();
+			
+			unset($input);
+			$input = array();
+		}
+		
+		return view('zones.create_zone')->with('data', $input)->with('errs', $valid);
 	}
     
 }    
