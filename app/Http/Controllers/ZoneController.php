@@ -3,6 +3,7 @@
 use Request;
 use Session;
 use WaterPi\Http\Controllers\Controller;
+use WaterPi\Http\Controllers\Validation;
 use WaterPi\models\Zone;
 
 class ZoneController extends Controller {
@@ -25,9 +26,8 @@ class ZoneController extends Controller {
 	public function index()
 	{
 		$zones = Zone::orderBy('NAME')->get();
-		$data = array();
 		
-		return view('zones.view_zones')->with('data', $data);
+		return view('zones.view_zones')->with('data', $zones);
 	}
     
     /**
@@ -47,7 +47,75 @@ class ZoneController extends Controller {
 	 */
 	public function add()
 	{
-		return view('zones.create_zone');
+		$input = Request::all();
+		$valid = Validation::createZone($input, true);
+		
+		if ($valid["status"])
+		{
+			$zo = new Zone();
+			$zo->NAME = trim($input["name"]);
+			$zo->RELAY_CHANNEL = trim($input["channel"]);
+			$zo->DESCRIPTION = trim($input["desc"]);
+			$zo->save();
+			
+			unset($input);
+			$input = array();
+		}
+		
+		return view('zones.create_zone')->with('data', $input)->with('errs', $valid);
+	}
+	
+	/**
+	 * Views a zone.
+	 *
+	 * @return Response
+	 */
+	public function viewZone($id)
+	{
+		$zone = Zone::where('ID', '=', $id)->first();
+		
+		if (!isset($zone))
+			return $this->index();
+
+		
+		return view('zones.edit_zone')->with('data', $zone);
+	}
+	
+	/**
+	 * Updates a zone.
+	 *
+	 * @return Response
+	 */
+	public function updateZone()
+	{
+		$input = Request::all();
+		
+		$zo = Zone::find($input["id"]);
+		
+		if (!isset($zo))
+		{
+			$valid["status"] = false;
+			$valid["errors"][] = "Error with page, please refresh and try again.";
+		}
+		else if (isset($input["delete"]))
+		{
+			Zone::destroy($input["id"]);
+			return $this->index();
+		}
+		else if (isset($input["save"]))
+		{
+			$valid = Validation::createZone($input, false);
+		
+			if ($valid["status"])
+			{
+				$zo->NAME = trim($input["name"]);
+				$zo->RELAY_CHANNEL = trim($input["channel"]);
+				$zo->DESCRIPTION = trim($input["desc"]);
+				$zo->save();
+			}
+		}
+		
+		return view('zones.edit_zone')->with('data', Zone::find($input["id"]))->with('errs', $valid);
 	}
     
 }    
