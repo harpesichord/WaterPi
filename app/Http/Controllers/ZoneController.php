@@ -56,6 +56,7 @@ class ZoneController extends Controller {
 			$zo->NAME = trim($input["name"]);
 			$zo->RELAY_CHANNEL = trim($input["channel"]);
 			$zo->DESCRIPTION = trim($input["desc"]);
+			$zo->ACTIVE = isset($input["active"]);
 			$zo->save();
 			
 			unset($input);
@@ -111,6 +112,7 @@ class ZoneController extends Controller {
 				$zo->NAME = trim($input["name"]);
 				$zo->RELAY_CHANNEL = trim($input["channel"]);
 				$zo->DESCRIPTION = trim($input["desc"]);
+				$zo->ACTIVE = isset($input["active"]);
 				$zo->save();
 			}
 		}

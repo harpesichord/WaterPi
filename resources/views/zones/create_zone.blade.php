@@ -25,6 +25,7 @@
                     
                     <div class="well col-sm-offset-3 col-sm-6">
                         <div class="form-group col-lg-12 col-sm-12">
+                            <div><input type="checkbox" data-off-label="Inactive" data-on-label="Active" name="active"  {{ ((!isset($data['active']) or $data['active']) ? "checked" : '') }} data-reverse></div>
                             <div class=""><input class="form-control form_text_field " id="name" name="name" placeholder="Name" value="{{ $data['name'] or ''}}" type="text" required/></div>
                             <div class=""><input class="form-control form_text_field " id="channel" name="channel" placeholder="Relay Channel" value="{{ $data['channel'] or ''}}" type="text"/></div>
                             <div class=""><textarea class="form-control" id="desc" name="desc" placeholder="Description" value="" rows="6">{{ $data['desc'] or ''}}</textarea></div>
@@ -52,6 +53,7 @@
     <script>
         var BASE = '<?php echo Request::root(); ?>/';
         var _globalObj = {!! json_encode(array('_token'=> csrf_token())) !!}
+        $(':checkbox').checkboxpicker();
     </script>
     <!-- <script src="{{ asset('') }}"></script> -->
 @stop
