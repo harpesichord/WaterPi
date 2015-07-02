@@ -2,19 +2,20 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Zone extends Model {
+class WateringLength extends Model {
     /**
 	 * The database table used by the model.
 	 *
 	 * @var string
 	 */
-	protected $table = 'zone';
+	protected $table = 'watering_lengths';
 	public $primaryKey  = 'ID';
 	const UPDATED_AT = 'UPDATED';
 	const CREATED_AT  = 'CREATED';
-    
-    public function WateringLengths()
+	
+	public function Zone()
 	{
-		return $this->hasMany('WaterPi\models\WateringLength', 'ID', 'ZONE');
+		return $this->belongsTo('WaterPi\models\Zone', 'ZONE', 'ID');
 	}
+    
 }

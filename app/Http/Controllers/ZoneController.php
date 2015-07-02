@@ -75,7 +75,10 @@ class ZoneController extends Controller {
 		$zone = Zone::where('ID', '=', $id)->first();
 		
 		if (!isset($zone))
-			return $this->index();
+		{	
+			header( "Location: /zones" );
+			exit();
+		}
 
 		
 		return view('zones.edit_zone')->with('data', $zone);
@@ -100,7 +103,8 @@ class ZoneController extends Controller {
 		else if (isset($input["delete"]))
 		{
 			Zone::destroy($input["id"]);
-			return $this->index();
+			header( "Location: /zones" );
+			exit();
 		}
 		else if (isset($input["save"]))
 		{
