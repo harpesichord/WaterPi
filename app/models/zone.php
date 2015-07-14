@@ -1,6 +1,7 @@
 <?php namespace WaterPi\models;
 
 use Illuminate\Database\Eloquent\Model;
+use WaterPi\models\FlowRate;
 
 class Zone extends Model {
     /**
@@ -12,6 +13,12 @@ class Zone extends Model {
 	public $primaryKey  = 'ID';
 	const UPDATED_AT = 'UPDATED';
 	const CREATED_AT  = 'CREATED';
+	
+    public function FlowRates()
+    {
+        return $this->hasMany('WaterPi\models\FlowRate', 'ZONE', 'ID');
+    }
+
     
     public function WateringLengths()
 	{

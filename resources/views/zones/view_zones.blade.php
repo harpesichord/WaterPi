@@ -25,7 +25,7 @@
                         <table class="table table-striped" id="zones">
                             <thead>
                                 <tr>
-                                    <td></td>
+                                    <td>Active</td>
                                     <td>Name</td>
                                     <td>Relay Channel</td>
                                     <td>Description</td>
@@ -34,7 +34,7 @@
                             <tbody >
                                 @foreach ((isset($data) ? $data : array()) as $zone)
                                     <tr>
-                                        <td></td>
+                                        <td>{{ ($zone["ACTIVE"] ? "Active" : "Inactive") }}</td>
                                         <td><a href="{{ url('/zones/view/' . $zone["ID"]) }}">{{ $zone["NAME"] }}</a></td>
                                         <td>{{ $zone["RELAY_CHANNEL"] }}</td>
                                         <td>{{ $zone["DESCRIPTION"] }}</td>

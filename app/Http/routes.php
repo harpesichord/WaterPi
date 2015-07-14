@@ -16,9 +16,11 @@ Route::get('home', 'HomeController@index');
 
 /* Zones */
 Route::get('zones', 'ZoneController@index');
+Route::get('zones/flowRates', 'ZoneController@flowRates');
 
 Route::get('zones/create', 'ZoneController@create');
 Route::post('zones/create', 'ZoneController@add');
+
 
 Route::get('zones/view/{id}', 'ZoneController@viewZone')->where('id', '[0-9]+');
 Route::post('zones/view/{id}', 'ZoneController@updateZone')->where('id', '[0-9]+');
