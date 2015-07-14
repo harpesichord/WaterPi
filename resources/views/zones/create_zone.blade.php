@@ -23,12 +23,36 @@
                 <form method="post" class="addForm" role="form" action="">    
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     
-                    <div class="well col-sm-offset-3 col-sm-6">
+                    <div class="well col-sm-offset-2 col-sm-8">
                         <div class="form-group col-lg-12 col-sm-12">
                             <div><input type="checkbox" data-off-label="Inactive" data-on-label="Active" name="active"  {{ ((!isset($data['active']) or $data['active']) ? "checked" : '') }} data-reverse></div>
                             <div class=""><input class="form-control form_text_field " id="name" name="name" placeholder="Name" value="{{ $data['name'] or ''}}" type="text" required/></div>
                             <div class=""><input class="form-control form_text_field " id="channel" name="channel" placeholder="Relay Channel" value="{{ $data['channel'] or ''}}" type="text"/></div>
                             <div class=""><textarea class="form-control" id="desc" name="desc" placeholder="Description" value="" rows="6">{{ $data['desc'] or ''}}</textarea></div>
+                            <div><h4>Flow Rate: </h4><span id="flow">0.0000</span><span> gallons/minute (gpm)</span></div>
+                        </div>
+                        <div class="form-group col-lg-12 col-sm-12"><hr></div>
+                        <div class="form-group col-lg-12 col-sm-12">
+                            <h4>Flow Rates</h4>
+                            <p>To calculate the flow rate of your zone fill in the information below for each different type of head you use.</p>
+                            <a class="btn btn-info addFlowRate" href="#" id="addFlowRate">Add Flow Rate</a>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="flowRates">
+                                    <thead>
+                                        <tr>
+                                            <td></td>
+                                            <td>Nozzel Diameter</td>
+                                            <td>Water Pressure</td>
+                                            <td>Head Quantity</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                        @foreach ((isset($data["rates"]) ? $data["rates"] : array()) as $rate)
+                                            @include('zones.flow_rate', ['rate' => $rate])
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <div class="col-sm-4 col-sm-offset-4"><p><input type="submit" id="search" name="submit" class="btn btn-lg btn-primary btn-block" value="Add Zone" /></p></div>
                     </div>
@@ -55,5 +79,5 @@
         var _globalObj = {!! json_encode(array('_token'=> csrf_token())) !!}
         $(':checkbox').checkboxpicker();
     </script>
-    <!-- <script src="{{ asset('') }}"></script> -->
+    <script src="{{ asset('/js/zone/zones.js') }}"></script>
 @stop
